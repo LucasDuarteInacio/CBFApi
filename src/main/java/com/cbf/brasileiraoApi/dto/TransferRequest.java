@@ -1,4 +1,4 @@
-package com.cbf.brasileiraoApi.entity;
+package com.cbf.brasileiraoApi.dto;
 
 
 import lombok.*;
@@ -12,13 +12,11 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transfer {
+public class TransferRequest {
 
-    @Id
-    private String id;
-    private Team originalTeam;
-    private Team destinationTeam;
-    private Player player;
+    private String playerId;
+    private String originalTeamId;
+    private String destinationTeamId;
     private LocalDate date;
     private BigDecimal tranferValue;
 }

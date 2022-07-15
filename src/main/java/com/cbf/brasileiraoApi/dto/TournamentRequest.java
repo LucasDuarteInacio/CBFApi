@@ -1,7 +1,8 @@
-package com.cbf.brasileiraoApi.entity;
+package com.cbf.brasileiraoApi.dto;
 
+
+import com.cbf.brasileiraoApi.entity.enums.TournamentTypeEnum;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 
 import java.util.ArrayList;
@@ -12,11 +13,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tournament {
+public class TournamentRequest {
 
-    @Id
-    private String id;
     private String name;
     private String tournamentType;
-    private List<Team> teams = new ArrayList<>();
+    private List<String> teamsId = new ArrayList<>();
+
+
 }
+

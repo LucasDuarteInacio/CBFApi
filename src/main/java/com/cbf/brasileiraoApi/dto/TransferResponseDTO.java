@@ -1,8 +1,9 @@
-package com.cbf.brasileiraoApi.entity;
+package com.cbf.brasileiraoApi.dto;
 
 
+import com.cbf.brasileiraoApi.entity.Player;
+import com.cbf.brasileiraoApi.entity.Team;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,13 +13,12 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transfer {
+public class TransferResponseDTO {
 
-    @Id
     private String id;
     private Team originalTeam;
     private Team destinationTeam;
-    private Player player;
+    private PlayerResponseDTO player;
     private LocalDate date;
     private BigDecimal tranferValue;
 }
