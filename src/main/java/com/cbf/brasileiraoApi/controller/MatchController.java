@@ -1,9 +1,11 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
+import com.cbf.brasileiraoApi.dto.EventRequest;
 import com.cbf.brasileiraoApi.dto.MatchRequest;
 import com.cbf.brasileiraoApi.dto.TransferRequest;
 import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
+import com.cbf.brasileiraoApi.entity.Event;
 import com.cbf.brasileiraoApi.entity.Match;
 import com.cbf.brasileiraoApi.service.MatchService;
 import com.cbf.brasileiraoApi.service.TransferService;
@@ -37,5 +39,11 @@ public class MatchController {
     @GetMapping("/{id}")
     public ResponseEntity<Match> findById(@PathVariable String id){
         return ResponseEntity.ok().body(matchService.findById(id));
+    }
+
+    @PostMapping("/{id}/events/{typeEvent}")
+    public ResponseEntity<Event> event(@PathVariable String id,@PathVariable String typeEvent,@RequestBody EventRequest eventRequest){
+        Event event = matchService.newEvent(id,typeEvent,eventRequest);
+        return ResponseEntity.ok().body(event);
     }
 }

@@ -10,10 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Event {
-    private Team team;
     private Player player;
     private Player playerOut;
     private String addition;
     private String minutes;
+    private String infractionType;
     private String eventType;
 }
