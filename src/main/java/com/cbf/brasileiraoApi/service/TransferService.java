@@ -5,6 +5,7 @@ import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.entity.Transfer;
+import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.mapper.TransferMapper;
 import com.cbf.brasileiraoApi.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,22 +20,24 @@ public class TransferService {
 
     private final TransferRepository transferRepository;
     private final TransferMapper transferMapper;
+    private final PlayerMapper playerMapper;
     private final TeamService  teamService;
     private final PlayerService  playerService;
 
     public TransferResponseDTO newTransfer(TransferRequest transferRequest){
-        Player player = playerService.findById(transferRequest.getPlayerId());
+        Player player = playerMapper.toDomain(playerService.findById(transferRequest.getPlayerId()));
         Team destinationTeam = teamService.findById(transferRequest.getDestinationTeamId());
+        Team originalTeam = teamService.findById(player.getTeam().getId());
 
-        playerService.changePlayerTeam(player,destinationTeam);
         Transfer transfer = Transfer.builder()
                 .id(String.valueOf(UUID.randomUUID()))
                 .player(player)
-                .originalTeam(teamService.findById(transferRequest.getOriginalTeamId()))
+                .originalTeam(originalTeam)
                 .destinationTeam(destinationTeam)
                 .date(transferRequest.getDate())
                 .tranferValue(transferRequest.getTranferValue())
                 .build();
+        playerService.changePlayerTeam(player,destinationTeam);
 
         return transferMapper.toReponseDTOWithoutTeam(transferRepository.save(transfer));
     }

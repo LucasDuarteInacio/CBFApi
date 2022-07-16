@@ -1,6 +1,7 @@
 package com.cbf.brasileiraoApi.service;
 
 import com.cbf.brasileiraoApi.dto.PlayerRequest;
+import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.mapper.PlayerMapper;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
@@ -21,21 +21,17 @@ public class PlayerService {
     @Lazy
     private final TeamService teamService;
 
-    public Player save(PlayerRequest playerRequest) {
-        String id = String.valueOf(UUID.randomUUID());
-        Team team = teamService.findById(playerRequest.getIdTeam());
-        Player player = playerMapper.toDomain(playerRequest);
-        player.setId(id);
-        player.setTeam(team);
-        return playerRepository.save(player);
+    public PlayerResponseDTO save(PlayerRequest playerRequest) {
+        Player player = playerMapper.toDomain(playerRequest,teamService.findById(playerRequest.getIdTeam()));
+        return playerMapper.toReponseDTO(playerRepository.save(player));
     }
 
-    public List<Player> findAll() {
-        return playerRepository.findAll();
+    public List<PlayerResponseDTO> findAll() {
+        return playerMapper.toReponseDTO(playerRepository.findAll());
     }
 
-    public Player findById(String id) {
-        return playerRepository.findById(id).get();
+    public PlayerResponseDTO findById(String id) {
+        return  playerMapper.toReponseDTO(playerRepository.findById(id).get());
     }
 
     public List<Player> findAllByIdTeam(String idTeam) {

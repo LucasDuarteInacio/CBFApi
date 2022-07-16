@@ -2,6 +2,7 @@ package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
 import com.cbf.brasileiraoApi.dto.PlayerRequest;
+import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.dto.TeamRequest;
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
@@ -25,8 +26,8 @@ public class PlayerController {
     private final PlayerService playerService;
 
     @PostMapping
-    public ResponseEntity<Player> savePlayer(@RequestBody PlayerRequest playerRequest){
-        Player player = playerService.save(playerRequest);
+    public ResponseEntity<PlayerResponseDTO> savePlayer(@RequestBody PlayerRequest playerRequest){
+        PlayerResponseDTO player = playerService.save(playerRequest);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/id")
                 .buildAndExpand(player.getId())
@@ -35,12 +36,12 @@ public class PlayerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Player>> findAll(){
+    public ResponseEntity<List<PlayerResponseDTO>> findAll(){
         return ResponseEntity.ok().body(playerService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Player> findById(@PathVariable String id){
+    public ResponseEntity<PlayerResponseDTO> findById(@PathVariable String id){
         return ResponseEntity.ok().body(playerService.findById(id));
     }
 }

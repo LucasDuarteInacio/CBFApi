@@ -28,11 +28,10 @@ public class TournamentService {
         }catch (Exception e ){
             throw new RuntimeException("tipo de torneio invalido");
         }
-        String id = String.valueOf(UUID.randomUUID());
-        List<Team> teams = teamService.findByIds(tournamentRequest.getTeamsId());
-        Tournament tournament = tournamentMapper.toDomain(tournamentRequest);
-        tournament.setTeams(teams);
-        tournament.setId(id);
+
+        Tournament tournament = tournamentMapper.toDomain(tournamentRequest,teamService.findByIds(tournamentRequest.getTeamsId()));
+
+
        return tournamentMapper.toResponseDTO(tournamentRepository.save(tournament));
     }
 

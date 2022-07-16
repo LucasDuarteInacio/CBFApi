@@ -15,7 +15,6 @@ import java.time.LocalDate;
 public class TransferRequest {
 
     private String playerId;
-    private String originalTeamId;
     private String destinationTeamId;
     private LocalDate date;
     private BigDecimal tranferValue;

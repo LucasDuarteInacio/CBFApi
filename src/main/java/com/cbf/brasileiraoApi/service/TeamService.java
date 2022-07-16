@@ -30,9 +30,7 @@ public class TeamService {
         return (List<Team>) teamRepository.findAllById(teamsId);
     }
     public Team save(TeamRequest teamRequest){
-        String id = String.valueOf(UUID.randomUUID());
         Team team = teamMapper.toDomain(teamRequest);
-        team.setId(id);
        return teamRepository.save(team);
     }
 
@@ -41,7 +39,7 @@ public class TeamService {
         List<Team> teams = teamRepository.findAll();
         List<TeamResponseDTO> teamResponseDTOList = teamMapper.toResponseDTO(teams);
         for(TeamResponseDTO teamResponseDTO:teamResponseDTOList){
-            teamResponseDTO.setPlayers(playerMapper.toReponseDTO(playerService.findAllByIdTeam(teamResponseDTO.getId())));
+            teamResponseDTO.setPlayers(playerMapper.toReponseDTOWithoutTeam(playerService.findAllByIdTeam(teamResponseDTO.getId())));
         }
         return teamResponseDTOList;
     }
