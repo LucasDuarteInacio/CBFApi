@@ -2,6 +2,7 @@ package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
 import com.cbf.brasileiraoApi.dto.TournamentRequest;
+import com.cbf.brasileiraoApi.dto.TournamentResponseDTO;
 import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.service.TournamentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,8 +22,8 @@ public class TournamentController {
     private final TournamentService tournamentService;
 
     @PostMapping
-    public ResponseEntity<Tournament> saveTournament(@RequestBody  TournamentRequest tournamentRequest){
-       Tournament tournament = tournamentService.save(tournamentRequest);
+    public ResponseEntity<TournamentResponseDTO> saveTournament(@RequestBody  TournamentRequest tournamentRequest){
+        TournamentResponseDTO tournament = tournamentService.save(tournamentRequest);
         URI uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/id")
@@ -32,12 +33,12 @@ public class TournamentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tournament>> findAll(){
+    public ResponseEntity<List<TournamentResponseDTO>> findAll(){
         return ResponseEntity.ok().body(tournamentService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tournament> findById(@PathVariable String id){
+    public ResponseEntity<TournamentResponseDTO> findById(@PathVariable String id){
         return ResponseEntity.ok().body(tournamentService.findById(id));
     }
 }

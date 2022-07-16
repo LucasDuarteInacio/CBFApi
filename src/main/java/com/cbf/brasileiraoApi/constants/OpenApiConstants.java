@@ -12,6 +12,6 @@ public class OpenApiConstants {
     public static final String TOURNAMENT = "Tournament";
     public static final String TEAM = "Team";
     public static final String PLAYER = "Player";
-
+    public static final String MATCH = "Match";
     public static final String TRANSFER = "Transfer";
 }

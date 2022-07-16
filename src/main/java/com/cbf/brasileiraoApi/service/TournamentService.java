@@ -1,6 +1,8 @@
 package com.cbf.brasileiraoApi.service;
 
 import com.cbf.brasileiraoApi.dto.TournamentRequest;
+import com.cbf.brasileiraoApi.dto.TournamentResponseDTO;
+import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
 import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.entity.enums.TournamentTypeEnum;
@@ -20,7 +22,7 @@ public class TournamentService {
     private final TournamentRepository tournamentRepository;
     private final TournamentMapper tournamentMapper;
     private final TeamService teamService;
-    public Tournament save(TournamentRequest tournamentRequest){
+    public TournamentResponseDTO save(TournamentRequest tournamentRequest){
         try {
             TournamentTypeEnum.valueOf(tournamentRequest.getTournamentType());
         }catch (Exception e ){
@@ -31,17 +33,17 @@ public class TournamentService {
         Tournament tournament = tournamentMapper.toDomain(tournamentRequest);
         tournament.setTeams(teams);
         tournament.setId(id);
-       return tournamentRepository.save(tournament);
+       return tournamentMapper.toResponseDTO(tournamentRepository.save(tournament));
     }
 
-    public List<Tournament> findAll(){
-        return tournamentRepository.findAll();
+    public List<TournamentResponseDTO> findAll(){
+        return tournamentMapper.toResponseDTO(tournamentRepository.findAll());
     }
 
-    public Tournament findById(String id){
+    public TournamentResponseDTO findById(String id){
        Optional<Tournament> tournament = tournamentRepository.findById(id);
         if(tournament.isPresent()){
-            return tournament.get();
+            return tournamentMapper.toResponseDTO(tournament.get());
         } else {
             throw new RuntimeException("Torneio não encontado");
         }
