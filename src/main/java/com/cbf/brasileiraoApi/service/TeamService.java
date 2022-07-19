@@ -1,20 +1,17 @@
 package com.cbf.brasileiraoApi.service;
 
-import com.cbf.brasileiraoApi.dto.TeamRequest;
+import com.cbf.brasileiraoApi.exception.NotFoundException;
+import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.dto.TeamResponseDTO;
-import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
-import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.mapper.TeamMapper;
 import com.cbf.brasileiraoApi.repository.TeamRepository;
-import com.cbf.brasileiraoApi.repository.TournamentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +42,7 @@ public class TeamService {
     }
 
     public Team findById(String id){
-        return teamRepository.findById(id).get();
+        return teamRepository.findById(id).orElseThrow(NotFoundException::teamNotFound);
     }
 
 }

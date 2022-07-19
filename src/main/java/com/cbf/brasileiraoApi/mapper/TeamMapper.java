@@ -1,6 +1,6 @@
 package com.cbf.brasileiraoApi.mapper;
 
-import com.cbf.brasileiraoApi.dto.TeamRequest;
+import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.dto.TeamResponseDTO;
 import com.cbf.brasileiraoApi.entity.Team;
 import org.mapstruct.Mapper;

@@ -1,22 +1,18 @@
 package com.cbf.brasileiraoApi.service;
 
-import com.cbf.brasileiraoApi.dto.EventRequest;
-import com.cbf.brasileiraoApi.dto.MatchRequest;
-import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
+import com.cbf.brasileiraoApi.exception.BadRequestException;
+import com.cbf.brasileiraoApi.exception.NotFoundException;
+import com.cbf.brasileiraoApi.request.EventRequest;
+import com.cbf.brasileiraoApi.request.MatchRequest;
 import com.cbf.brasileiraoApi.entity.*;
 import com.cbf.brasileiraoApi.entity.enums.EventTypeEnum;
 import com.cbf.brasileiraoApi.entity.enums.InfractionTypeEnum;
-import com.cbf.brasileiraoApi.entity.enums.TournamentTypeEnum;
 import com.cbf.brasileiraoApi.mapper.MatchMapper;
 import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.mapper.TournamentMapper;
 import com.cbf.brasileiraoApi.repository.MatchRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
-
-import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
@@ -45,14 +41,14 @@ public class MatchService {
     }
 
     public Match findById(String id){
-        return matchRepository.findById(id).get();
+        return matchRepository.findById(id).orElseThrow(NotFoundException::matchNotFound);
     }
 
     public Event newEvent(String id, String typeEvent, EventRequest eventRequest){
         Match match = findById(id);
         Event event = getTypeEvent(eventRequest,typeEvent);
         match.getEvents().add(event);
-       save(match);
+        save(match);
         return event;
     }
 
@@ -130,7 +126,7 @@ public class MatchService {
                         .build();
                 break;
             default:
-                throw new RuntimeException("Tipo de evento invalido");
+                throw new BadRequestException(BadRequestException.eventTypeBadRequest().getIssue());
         }
         return event;
     }

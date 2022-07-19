@@ -1,14 +1,11 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.dto.EventRequest;
-import com.cbf.brasileiraoApi.dto.MatchRequest;
-import com.cbf.brasileiraoApi.dto.TransferRequest;
-import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
+import com.cbf.brasileiraoApi.request.EventRequest;
+import com.cbf.brasileiraoApi.request.MatchRequest;
 import com.cbf.brasileiraoApi.entity.Event;
 import com.cbf.brasileiraoApi.entity.Match;
 import com.cbf.brasileiraoApi.service.MatchService;
-import com.cbf.brasileiraoApi.service.TransferService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("matchers")
-@Tag(name = OpenApiConstants.MATCH)
+@Tag(name = OpenApiConstants.MATCH, description = "information about matches")
 public class MatchController {
     private final MatchService matchService;
 

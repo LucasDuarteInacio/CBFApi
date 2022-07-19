@@ -1,4 +1,4 @@
-package com.cbf.brasileiraoApi.dto;
+package com.cbf.brasileiraoApi.request;
 
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;

@@ -1,12 +1,9 @@
 package com.cbf.brasileiraoApi.mapper;
 
-import com.cbf.brasileiraoApi.dto.MatchRequest;
-import com.cbf.brasileiraoApi.dto.TournamentResponseDTO;
+import com.cbf.brasileiraoApi.request.MatchRequest;
 import com.cbf.brasileiraoApi.entity.Match;
 import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.entity.Tournament;
-import com.cbf.brasileiraoApi.repository.TournamentRepository;
-import com.cbf.brasileiraoApi.service.TournamentService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

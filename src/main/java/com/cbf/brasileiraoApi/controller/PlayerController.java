@@ -1,12 +1,8 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.dto.PlayerRequest;
+import com.cbf.brasileiraoApi.request.PlayerRequest;
 import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
-import com.cbf.brasileiraoApi.dto.TeamRequest;
-import com.cbf.brasileiraoApi.entity.Player;
-import com.cbf.brasileiraoApi.entity.Team;
-import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.service.PlayerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("players")
-@Tag(name = OpenApiConstants.PLAYER)
+@Tag(name = OpenApiConstants.PLAYER, description = "information about players")
 public class PlayerController {
 
     private final PlayerService playerService;

@@ -1,15 +1,13 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.dto.TeamRequest;
+import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.dto.TeamResponseDTO;
 import com.cbf.brasileiraoApi.entity.Team;
-import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.service.TeamService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -19,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("teams")
-@Tag(name = OpenApiConstants.TEAM)
+@Tag(name = OpenApiConstants.TEAM, description = "information about teams")
 public class TeamController {
 
     private final TeamService teamService;

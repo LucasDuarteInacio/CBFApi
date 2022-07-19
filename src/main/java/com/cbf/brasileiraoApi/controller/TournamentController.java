@@ -1,9 +1,8 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.dto.TournamentRequest;
+import com.cbf.brasileiraoApi.request.TournamentRequest;
 import com.cbf.brasileiraoApi.dto.TournamentResponseDTO;
-import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.service.TournamentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("tournaments")
-@Tag(name = OpenApiConstants.TOURNAMENT)
+@Tag(name = OpenApiConstants.TOURNAMENT, description = "Tournament about information")
 public class TournamentController {
     private final TournamentService tournamentService;
 

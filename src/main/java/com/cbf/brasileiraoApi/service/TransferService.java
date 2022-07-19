@@ -1,6 +1,7 @@
 package com.cbf.brasileiraoApi.service;
 
-import com.cbf.brasileiraoApi.dto.TransferRequest;
+import com.cbf.brasileiraoApi.exception.NotFoundException;
+import com.cbf.brasileiraoApi.request.TransferRequest;
 import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
@@ -47,7 +48,7 @@ public class TransferService {
     }
 
     public TransferResponseDTO findById(String id) {
-        return transferMapper.toReponseDTOWithoutTeam(transferRepository.findById(id).get());
+        return transferMapper.toReponseDTOWithoutTeam(transferRepository.findById(id).orElseThrow(NotFoundException::transferNotFound));
     }
 
 

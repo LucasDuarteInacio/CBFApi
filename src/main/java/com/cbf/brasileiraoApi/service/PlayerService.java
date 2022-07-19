@@ -1,6 +1,7 @@
 package com.cbf.brasileiraoApi.service;
 
-import com.cbf.brasileiraoApi.dto.PlayerRequest;
+import com.cbf.brasileiraoApi.exception.NotFoundException;
+import com.cbf.brasileiraoApi.request.PlayerRequest;
 import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
@@ -31,7 +32,7 @@ public class PlayerService {
     }
 
     public PlayerResponseDTO findById(String id) {
-        return  playerMapper.toReponseDTO(playerRepository.findById(id).get());
+        return  playerMapper.toReponseDTO(playerRepository.findById(id).orElseThrow(NotFoundException::playerNotFound));
     }
 
     public List<Player> findAllByIdTeam(String idTeam) {

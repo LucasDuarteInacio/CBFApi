@@ -1,6 +1,6 @@
 package com.cbf.brasileiraoApi.mapper;
 
-import com.cbf.brasileiraoApi.dto.PlayerRequest;
+import com.cbf.brasileiraoApi.request.PlayerRequest;
 import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
