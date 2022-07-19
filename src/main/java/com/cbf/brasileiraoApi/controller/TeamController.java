@@ -5,6 +5,9 @@ import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.dto.TeamResponseDTO;
 import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.service.TeamService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,12 @@ public class TeamController {
     private final TeamService teamService;
 
     @PostMapping
+    @Operation(summary = "Register new team")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "201", description = "Register new team")
+            }
+    )
     public ResponseEntity<Team> saveTeam(@RequestBody TeamRequest teamRequest){
         Team team =teamService.save(teamRequest);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -33,11 +42,24 @@ public class TeamController {
     }
 
     @GetMapping
+    @Operation(summary = "find all teams")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "201", description = "find all teams")
+            }
+    )
     public ResponseEntity<List<TeamResponseDTO>> findAll(){
         return ResponseEntity.ok().body(teamService.findAll());
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Find team by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Find team by id"),
+                    @ApiResponse(responseCode = "404", description = "Team not found")
+            }
+    )
     public ResponseEntity<Team> findById(@PathVariable String id){
         return ResponseEntity.ok().body(teamService.findById(id));
     }

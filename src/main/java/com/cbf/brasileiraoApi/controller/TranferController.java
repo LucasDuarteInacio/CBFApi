@@ -4,6 +4,9 @@ import com.cbf.brasileiraoApi.constants.OpenApiConstants;
 import com.cbf.brasileiraoApi.request.TransferRequest;
 import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
 import com.cbf.brasileiraoApi.service.TransferService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,12 @@ public class TranferController {
     private final TransferService transferService;
 
     @PostMapping
+    @Operation(summary = "Register new transfer")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "201", description = "Register new transfer")
+            }
+    )
     public ResponseEntity<TransferResponseDTO> newTranfer(@RequestBody TransferRequest transferRequest){
         TransferResponseDTO transfer = transferService.newTransfer(transferRequest);
         URI uri =
@@ -32,11 +41,24 @@ public class TranferController {
     }
 
     @GetMapping
+    @Operation(summary = "find all tranfers")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "201", description = "find all players")
+            }
+    )
     public ResponseEntity<List<TransferResponseDTO>> findAll(){
         return ResponseEntity.ok().body(transferService.findAll());
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Find transfer by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Find transfer by id"),
+                    @ApiResponse(responseCode = "404", description = "Transfer not found")
+            }
+    )
     public ResponseEntity<TransferResponseDTO> findById(@PathVariable String id){
         return ResponseEntity.ok().body(transferService.findById(id));
     }
