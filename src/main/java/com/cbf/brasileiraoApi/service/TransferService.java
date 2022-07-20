@@ -1,5 +1,6 @@
 package com.cbf.brasileiraoApi.service;
 
+import com.cbf.brasileiraoApi.exception.BadRequestException;
 import com.cbf.brasileiraoApi.exception.NotFoundException;
 import com.cbf.brasileiraoApi.request.TransferRequest;
 import com.cbf.brasileiraoApi.dto.TransferResponseDTO;
@@ -26,6 +27,9 @@ public class TransferService {
     private final PlayerService  playerService;
 
     public TransferResponseDTO newTransfer(TransferRequest transferRequest){
+        if(playerService.isPlayerDeleted(transferRequest.getPlayerId())){
+            throw new BadRequestException(BadRequestException.playerBadRequest().getIssue());
+        }
         Player player = playerMapper.toDomain(playerService.findById(transferRequest.getPlayerId()));
         Team destinationTeam = teamService.findById(transferRequest.getDestinationTeamId());
         Team originalTeam = teamService.findById(player.getTeam().getId());

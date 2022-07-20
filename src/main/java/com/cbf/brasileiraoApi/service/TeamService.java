@@ -4,7 +4,6 @@ import com.cbf.brasileiraoApi.exception.NotFoundException;
 import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.dto.TeamResponseDTO;
 import com.cbf.brasileiraoApi.entity.Team;
-import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.mapper.TeamMapper;
 import com.cbf.brasileiraoApi.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ public class TeamService {
 
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
-    private final PlayerMapper playerMapper;
     private final PlayerService playerService;
 
     @Transactional(readOnly = true)
@@ -36,7 +34,7 @@ public class TeamService {
         List<Team> teams = teamRepository.findAll();
         List<TeamResponseDTO> teamResponseDTOList = teamMapper.toResponseDTO(teams);
         for(TeamResponseDTO teamResponseDTO:teamResponseDTOList){
-            teamResponseDTO.setPlayers(playerMapper.toReponseDTOWithoutTeam(playerService.findAllByIdTeam(teamResponseDTO.getId())));
+            teamResponseDTO.setPlayers(playerService.findAllByTeamId(teamResponseDTO.getId()));
         }
         return teamResponseDTOList;
     }

@@ -1,6 +1,8 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
+import com.cbf.brasileiraoApi.entity.Player;
+import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.request.PlayerRequest;
 import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.service.PlayerService;
@@ -62,5 +64,44 @@ public class PlayerController {
     )
     public ResponseEntity<PlayerResponseDTO> findById(@PathVariable String id){
         return ResponseEntity.ok().body(playerService.findById(id));
+    }
+
+
+    @GetMapping("teams/{teamId}")
+    @Operation(summary = "Find player by team id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Find player by team id"),
+                    @ApiResponse(responseCode = "404", description = "team not found")
+            }
+    )
+    public ResponseEntity<List<PlayerResponseDTO>> findByTeamId(@PathVariable String teamId){
+        return ResponseEntity.ok().body(playerService.findAllByTeamId(teamId));
+    }
+
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update player by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Update player by id"),
+                    @ApiResponse(responseCode = "404", description = "player not found")
+            }
+    )
+    public ResponseEntity<PlayerResponseDTO> updateById(@PathVariable String id,@RequestBody PlayerRequest playerRequest){
+        return ResponseEntity.ok().body(playerService.updateById(id,playerRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "delete player by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "delete player by id"),
+                    @ApiResponse(responseCode = "404", description = "player not found")
+            }
+    )
+    public ResponseEntity<Void> deletePlayer(@PathVariable String id){
+        playerService.deletePlayer(id);
+        return ResponseEntity.ok().build();
     }
 }

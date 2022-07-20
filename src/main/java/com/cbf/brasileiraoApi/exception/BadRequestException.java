@@ -13,4 +13,8 @@ public class BadRequestException extends ApiException {
     public static BadRequestException tournamentBadRequest() {
         return new BadRequestException(new Issue(IssueEnum.TOURNAMENT_BAD_REQUEST));
     }
+
+    public static BadRequestException playerBadRequest() {
+        return new BadRequestException(new Issue(IssueEnum.PLAYER_BAD_REQUEST));
+    }
 }

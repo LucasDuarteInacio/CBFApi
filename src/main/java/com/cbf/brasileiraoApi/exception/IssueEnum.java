@@ -12,6 +12,7 @@ public enum IssueEnum {
     MATCH_NOT_FOUND( "Partida não encontrada."),
     PLAYER_NOT_FOUND( "Jogador não encontrado."),
     TOURNAMENT_BAD_REQUEST( "Torneio inválido."),
+    PLAYER_BAD_REQUEST( "Jogador inválido."),
     EVENT_TYPE_BAD_REQUEST( "Tipo de evento inválido.");
 
     private final String message;

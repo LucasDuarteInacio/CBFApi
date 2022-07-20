@@ -19,5 +19,6 @@ public class Player {
     private LocalDate birthDate;
     private String country;
     private Team team;
+    private Boolean deleted;
 
 }

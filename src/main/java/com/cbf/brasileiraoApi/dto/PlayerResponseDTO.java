@@ -20,6 +20,7 @@ public class PlayerResponseDTO {
     private String country;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Team team;
+    private Boolean deleted;
 
 
 }
