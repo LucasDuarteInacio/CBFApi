@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -32,7 +33,7 @@ public class MatchController {
                     @ApiResponse(responseCode = "201", description = "Register new match")
             }
     )
-    public ResponseEntity<Match> newMatch(@RequestBody MatchRequest matchRequest){
+    public ResponseEntity<Match> newMatch(@RequestBody @Valid MatchRequest matchRequest){
         Match match = matchService.newMatch(matchRequest);
         URI uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
