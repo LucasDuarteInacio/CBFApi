@@ -1,6 +1,7 @@
 package com.cbf.brasileiraoApi.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Player {
 
     @Id

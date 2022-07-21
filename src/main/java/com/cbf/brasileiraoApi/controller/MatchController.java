@@ -2,9 +2,8 @@ package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
 import com.cbf.brasileiraoApi.dto.MatchResponseDTO;
-import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.entity.Event;
-import com.cbf.brasileiraoApi.entity.Match;
+import com.cbf.brasileiraoApi.entity.enums.EventTypeEnum;
 import com.cbf.brasileiraoApi.mapper.MatchMapper;
 import com.cbf.brasileiraoApi.request.EventRequest;
 import com.cbf.brasileiraoApi.request.MatchRequest;
@@ -68,7 +67,7 @@ public class MatchController {
             }
     )
     @PostMapping("/{id}/events/{typeEvent}")
-    public ResponseEntity<Event> event(@PathVariable String id, @PathVariable String typeEvent, @RequestBody EventRequest eventRequest) {
+    public ResponseEntity<Event> event(@PathVariable String id, @PathVariable EventTypeEnum typeEvent, @RequestBody EventRequest eventRequest) {
         Event event = matchService.newEvent(id, typeEvent, eventRequest);
         return ResponseEntity.ok().body(event);
     }

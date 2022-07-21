@@ -1,6 +1,5 @@
 package com.cbf.brasileiraoApi.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 

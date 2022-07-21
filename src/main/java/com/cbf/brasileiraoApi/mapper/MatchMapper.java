@@ -1,9 +1,7 @@
 package com.cbf.brasileiraoApi.mapper;
 
 import com.cbf.brasileiraoApi.dto.MatchResponseDTO;
-import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
 import com.cbf.brasileiraoApi.entity.Match;
-import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
 import com.cbf.brasileiraoApi.entity.Tournament;
 import com.cbf.brasileiraoApi.request.MatchRequest;
@@ -24,7 +22,7 @@ public interface MatchMapper {
     @Mapping(target = "homeTeam", source = "homeTeamRequest")
     @Mapping(target = "deleted", source = "isDeleted")
     @Mapping(target = "id", expression = "java(addUUID())")
-    Match toDomain(MatchRequest matchRequest, Team homeTeamRequest, Team visitingTeamRequest, Tournament tournamentRequest,Boolean isDeleted);
+    Match toDomain(MatchRequest matchRequest, Team homeTeamRequest, Team visitingTeamRequest, Tournament tournamentRequest, Boolean isDeleted);
 
     MatchResponseDTO toReponseDTO(Match match);
 

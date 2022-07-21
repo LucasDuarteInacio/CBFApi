@@ -14,6 +14,5 @@ public class Event {
     private Player playerOut;
     private String addition;
     private String minutes;
-    private String infractionType;
     private String eventType;
 }

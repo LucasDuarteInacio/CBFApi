@@ -3,7 +3,6 @@ package com.cbf.brasileiraoApi.service;
 import com.cbf.brasileiraoApi.entity.Event;
 import com.cbf.brasileiraoApi.entity.Match;
 import com.cbf.brasileiraoApi.entity.enums.EventTypeEnum;
-import com.cbf.brasileiraoApi.entity.enums.InfractionTypeEnum;
 import com.cbf.brasileiraoApi.exception.BadRequestException;
 import com.cbf.brasileiraoApi.exception.NotFoundException;
 import com.cbf.brasileiraoApi.mapper.MatchMapper;
@@ -35,7 +34,7 @@ public class MatchService {
                 teamService.findById(matchRequest.getHomeTeamId()),
                 teamService.findById(matchRequest.getVisitingTeamId()),
                 tournamentMapper.toDomain(tournamentService.findById(matchRequest.getTournamentId())),
-                        Boolean.FALSE
+                Boolean.FALSE
         );
         return save(match);
     }
@@ -48,17 +47,17 @@ public class MatchService {
         return matchRepository.findById(id).orElseThrow(NotFoundException::matchNotFound);
     }
 
-    public List<Match> findAllByTournamentId(String tournamentId){
+    public List<Match> findAllByTournamentId(String tournamentId) {
         return matchRepository.findAllByTournamentIdAndDeletedIsFalse(tournamentId);
     }
 
-    public void delete(String id){
+    public void delete(String id) {
         Match match = findById(id);
         match.setDeleted(Boolean.TRUE);
         save(match);
     }
 
-    public Event newEvent(String id, String typeEvent, EventRequest eventRequest) {
+    public Event newEvent(String id, EventTypeEnum typeEvent, EventRequest eventRequest) {
         Match match = findById(id);
         Event event = getTypeEvent(eventRequest, typeEvent);
         match.getEvents().add(event);
@@ -66,56 +65,56 @@ public class MatchService {
         return event;
     }
 
-    private Event getTypeEvent(EventRequest eventRequest, String typeEvent) {
+    private Event getTypeEvent(EventRequest eventRequest, EventTypeEnum typeEvent) {
         Event event;
         switch (typeEvent) {
-            case "start":
+            case START:
                 event = Event.builder()
                         .minutes("00:00")
                         .eventType(String.valueOf(EventTypeEnum.START))
                         .build();
                 break;
-            case "break":
+            case BREAK:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .eventType(String.valueOf(EventTypeEnum.BREAK))
                         .build();
                 break;
-            case "end":
+            case END:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .eventType(String.valueOf(EventTypeEnum.END))
                         .build();
                 break;
-            case "goal":
+            case GOAL:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .player(playerMapper.toDomain(playerService.findById(eventRequest.getPlayerId())))
                         .eventType(String.valueOf(EventTypeEnum.GOAL))
                         .build();
                 break;
-            case "yellowcard":
+            case YELLOWCARD:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .player(playerMapper.toDomain(playerService.findById(eventRequest.getPlayerId())))
                         .eventType(String.valueOf(EventTypeEnum.YELLOWCARD))
                         .build();
                 break;
-            case "redcard":
+            case REDCARD:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .player(playerMapper.toDomain(playerService.findById(eventRequest.getPlayerId())))
                         .eventType(String.valueOf(EventTypeEnum.REDCARD))
                         .build();
                 break;
-            case "addition":
+            case ADDITION:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .addition(eventRequest.getAddition())
                         .eventType(String.valueOf(EventTypeEnum.ADDITION))
                         .build();
                 break;
-            case "substution":
+            case SUBSTITUTION:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .player(playerMapper.toDomain(playerService.findById(eventRequest.getPlayerId())))
@@ -123,20 +122,18 @@ public class MatchService {
                         .eventType(String.valueOf(EventTypeEnum.SUBSTITUTION))
                         .build();
                 break;
-            case "foul":
+            case FOUL:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .player(playerMapper.toDomain(playerService.findById(eventRequest.getPlayerId())))
-                        .infractionType(String.valueOf(InfractionTypeEnum.FOUL))
-                        .eventType(String.valueOf(EventTypeEnum.INFRACTION))
+                        .eventType(String.valueOf(EventTypeEnum.FOUL))
                         .build();
                 break;
-            case "penalty":
+            case PENALTY:
                 event = Event.builder()
                         .minutes(eventRequest.getMinutes())
                         .player(playerMapper.toDomain(playerService.findById(eventRequest.getPlayerId())))
-                        .infractionType(String.valueOf(InfractionTypeEnum.PENALTY))
-                        .eventType(String.valueOf(EventTypeEnum.INFRACTION))
+                        .eventType(String.valueOf(EventTypeEnum.PENALTY))
                         .build();
                 break;
             default:
