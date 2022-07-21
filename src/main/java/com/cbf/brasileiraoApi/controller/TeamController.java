@@ -1,9 +1,9 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.dto.TeamResponseDTO;
 import com.cbf.brasileiraoApi.entity.Team;
+import com.cbf.brasileiraoApi.request.TeamRequest;
 import com.cbf.brasileiraoApi.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,8 +32,8 @@ public class TeamController {
                     @ApiResponse(responseCode = "201", description = "Register new team")
             }
     )
-    public ResponseEntity<Team> saveTeam(@RequestBody TeamRequest teamRequest){
-        Team team =teamService.save(teamRequest);
+    public ResponseEntity<Team> saveTeam(@RequestBody TeamRequest teamRequest) {
+        Team team = teamService.save(teamRequest);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/id")
                 .buildAndExpand(team.getId())
@@ -48,7 +48,7 @@ public class TeamController {
                     @ApiResponse(responseCode = "201", description = "find all teams")
             }
     )
-    public ResponseEntity<List<TeamResponseDTO>> findAll(){
+    public ResponseEntity<List<TeamResponseDTO>> findAll() {
         return ResponseEntity.ok().body(teamService.findAll());
     }
 
@@ -60,8 +60,35 @@ public class TeamController {
                     @ApiResponse(responseCode = "404", description = "Team not found")
             }
     )
-    public ResponseEntity<Team> findById(@PathVariable String id){
+    public ResponseEntity<Team> findById(@PathVariable String id) {
         return ResponseEntity.ok().body(teamService.findById(id));
+    }
+
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update team by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Update team by id"),
+                    @ApiResponse(responseCode = "404", description = "Team not found")
+            }
+    )
+    public ResponseEntity<TeamResponseDTO> update(@PathVariable String id, @RequestBody TeamRequest teamRequest) {
+        return ResponseEntity.ok().body(teamService.update(id, teamRequest));
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete team by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Delete team by id"),
+                    @ApiResponse(responseCode = "404", description = "Team not found")
+            }
+    )
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        teamService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }

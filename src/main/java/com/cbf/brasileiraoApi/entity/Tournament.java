@@ -3,7 +3,6 @@ package com.cbf.brasileiraoApi.entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,4 +18,5 @@ public class Tournament {
     private String name;
     private String tournamentType;
     private List<Team> teams = new ArrayList<>();
+    private Boolean deleted;
 }

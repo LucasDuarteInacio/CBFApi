@@ -1,10 +1,8 @@
 package com.cbf.brasileiraoApi.request;
 
 
-import com.cbf.brasileiraoApi.entity.enums.TournamentTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-
 
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -18,11 +16,11 @@ import java.util.List;
 public class TournamentRequest {
 
     @NotBlank
-    @Schema(description = "Tournament name",example = "Campeonato Brasileiro")
+    @Schema(description = "Tournament name", example = "Campeonato Brasileiro")
     private String name;
 
     @NotBlank
-    @Schema(description = "Tournament type",example = "CHAMPIONSHIP")
+    @Schema(description = "Tournament type", example = "CHAMPIONSHIP")
     private String tournamentType;
 
 

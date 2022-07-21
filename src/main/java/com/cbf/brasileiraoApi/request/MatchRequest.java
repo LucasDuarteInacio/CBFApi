@@ -1,15 +1,9 @@
 package com.cbf.brasileiraoApi.request;
 
-import com.cbf.brasileiraoApi.entity.Player;
-import com.cbf.brasileiraoApi.entity.Team;
-import com.cbf.brasileiraoApi.entity.Tournament;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Getter
 @Setter

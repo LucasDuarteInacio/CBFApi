@@ -44,29 +44,29 @@ public class PlayerService {
     }
 
     public PlayerResponseDTO updateById(String id, PlayerRequest playerRequest) {
-        if(isPlayerDeleted(id)){
+        if (isPlayerDeleted(id)) {
             throw new BadRequestException(BadRequestException.playerBadRequest().getIssue());
         }
         PlayerResponseDTO playerResponseDTO = findById(id);
-        if(nonNull(playerRequest.getName())){
+        if (nonNull(playerRequest.getName())) {
             playerResponseDTO.setName(playerRequest.getName());
         }
-        if(nonNull(playerRequest.getBirthDate())){
+        if (nonNull(playerRequest.getBirthDate())) {
             playerResponseDTO.setBirthDate(playerRequest.getBirthDate());
         }
-        if(nonNull(playerRequest.getCountry())){
+        if (nonNull(playerRequest.getCountry())) {
             playerResponseDTO.setCountry(playerRequest.getCountry());
         }
         playerRepository.save(playerMapper.toDomain(playerResponseDTO));
         return playerResponseDTO;
     }
 
-    public Boolean isPlayerDeleted(String playerId){
-       return nonNull(playerRepository.findByIdAndDeletedIsTrue(playerId));
+    public Boolean isPlayerDeleted(String playerId) {
+        return nonNull(playerRepository.findByIdAndDeletedIsTrue(playerId));
 
     }
 
-    public void deletePlayer(String playerId){
+    public void deletePlayer(String playerId) {
         Player player = playerMapper.toDomain(findById(playerId));
         player.setDeleted(Boolean.TRUE);
         playerRepository.save(player);

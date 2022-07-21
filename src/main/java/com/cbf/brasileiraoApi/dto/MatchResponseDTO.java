@@ -1,5 +1,8 @@
-package com.cbf.brasileiraoApi.entity;
+package com.cbf.brasileiraoApi.dto;
 
+import com.cbf.brasileiraoApi.entity.Event;
+import com.cbf.brasileiraoApi.entity.Team;
+import com.cbf.brasileiraoApi.entity.Tournament;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -12,9 +15,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Match {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class MatchResponseDTO {
 
-    @Id
     private String id;
     private String description;
     private Tournament tournament;

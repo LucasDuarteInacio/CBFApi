@@ -1,18 +1,21 @@
 package com.cbf.brasileiraoApi.service;
 
-import com.cbf.brasileiraoApi.exception.BadRequestException;
-import com.cbf.brasileiraoApi.exception.NotFoundException;
-import com.cbf.brasileiraoApi.request.EventRequest;
-import com.cbf.brasileiraoApi.request.MatchRequest;
-import com.cbf.brasileiraoApi.entity.*;
+import com.cbf.brasileiraoApi.entity.Event;
+import com.cbf.brasileiraoApi.entity.Match;
 import com.cbf.brasileiraoApi.entity.enums.EventTypeEnum;
 import com.cbf.brasileiraoApi.entity.enums.InfractionTypeEnum;
+import com.cbf.brasileiraoApi.exception.BadRequestException;
+import com.cbf.brasileiraoApi.exception.NotFoundException;
 import com.cbf.brasileiraoApi.mapper.MatchMapper;
 import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.mapper.TournamentMapper;
 import com.cbf.brasileiraoApi.repository.MatchRepository;
+import com.cbf.brasileiraoApi.request.EventRequest;
+import com.cbf.brasileiraoApi.request.MatchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,35 +29,46 @@ public class MatchService {
     private final PlayerMapper playerMapper;
     private final TournamentService tournamentService;
 
-    public Match newMatch(MatchRequest matchRequest){
+    public Match newMatch(MatchRequest matchRequest) {
         Match match = matchMapper.toDomain(
                 matchRequest,
                 teamService.findById(matchRequest.getHomeTeamId()),
                 teamService.findById(matchRequest.getVisitingTeamId()),
-                tournamentMapper.toDomain(tournamentService.findById(matchRequest.getTournamentId()))
+                tournamentMapper.toDomain(tournamentService.findById(matchRequest.getTournamentId())),
+                        Boolean.FALSE
         );
-      return save(match);
+        return save(match);
     }
 
-    private Match save(Match match){
+    private Match save(Match match) {
         return matchRepository.save(match);
     }
 
-    public Match findById(String id){
+    public Match findById(String id) {
         return matchRepository.findById(id).orElseThrow(NotFoundException::matchNotFound);
     }
 
-    public Event newEvent(String id, String typeEvent, EventRequest eventRequest){
+    public List<Match> findAllByTournamentId(String tournamentId){
+        return matchRepository.findAllByTournamentIdAndDeletedIsFalse(tournamentId);
+    }
+
+    public void delete(String id){
         Match match = findById(id);
-        Event event = getTypeEvent(eventRequest,typeEvent);
+        match.setDeleted(Boolean.TRUE);
+        save(match);
+    }
+
+    public Event newEvent(String id, String typeEvent, EventRequest eventRequest) {
+        Match match = findById(id);
+        Event event = getTypeEvent(eventRequest, typeEvent);
         match.getEvents().add(event);
         save(match);
         return event;
     }
 
-    private Event getTypeEvent(EventRequest eventRequest, String typeEvent){
+    private Event getTypeEvent(EventRequest eventRequest, String typeEvent) {
         Event event;
-        switch (typeEvent){
+        switch (typeEvent) {
             case "start":
                 event = Event.builder()
                         .minutes("00:00")

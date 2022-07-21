@@ -1,7 +1,6 @@
 package com.cbf.brasileiraoApi.dto;
 
 
-import com.cbf.brasileiraoApi.entity.Player;
 import com.cbf.brasileiraoApi.entity.Team;
 import lombok.*;
 
@@ -21,4 +20,5 @@ public class TransferResponseDTO {
     private PlayerResponseDTO player;
     private LocalDate date;
     private BigDecimal tranferValue;
+    private Boolean deleted;
 }

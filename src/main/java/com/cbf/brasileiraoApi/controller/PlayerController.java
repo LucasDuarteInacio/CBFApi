@@ -1,10 +1,8 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.entity.Player;
-import com.cbf.brasileiraoApi.entity.Team;
-import com.cbf.brasileiraoApi.request.PlayerRequest;
 import com.cbf.brasileiraoApi.dto.PlayerResponseDTO;
+import com.cbf.brasileiraoApi.request.PlayerRequest;
 import com.cbf.brasileiraoApi.service.PlayerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,7 +32,7 @@ public class PlayerController {
                     @ApiResponse(responseCode = "201", description = "Register new player")
             }
     )
-    public ResponseEntity<PlayerResponseDTO> newPlayer(@RequestBody PlayerRequest playerRequest){
+    public ResponseEntity<PlayerResponseDTO> newPlayer(@RequestBody PlayerRequest playerRequest) {
         PlayerResponseDTO player = playerService.save(playerRequest);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/id")
@@ -50,7 +48,7 @@ public class PlayerController {
                     @ApiResponse(responseCode = "201", description = "find all players")
             }
     )
-    public ResponseEntity<List<PlayerResponseDTO>> findAll(){
+    public ResponseEntity<List<PlayerResponseDTO>> findAll() {
         return ResponseEntity.ok().body(playerService.findAll());
     }
 
@@ -62,7 +60,7 @@ public class PlayerController {
                     @ApiResponse(responseCode = "404", description = "Player not found")
             }
     )
-    public ResponseEntity<PlayerResponseDTO> findById(@PathVariable String id){
+    public ResponseEntity<PlayerResponseDTO> findById(@PathVariable String id) {
         return ResponseEntity.ok().body(playerService.findById(id));
     }
 
@@ -75,7 +73,7 @@ public class PlayerController {
                     @ApiResponse(responseCode = "404", description = "team not found")
             }
     )
-    public ResponseEntity<List<PlayerResponseDTO>> findByTeamId(@PathVariable String teamId){
+    public ResponseEntity<List<PlayerResponseDTO>> findByTeamId(@PathVariable String teamId) {
         return ResponseEntity.ok().body(playerService.findAllByTeamId(teamId));
     }
 
@@ -88,8 +86,8 @@ public class PlayerController {
                     @ApiResponse(responseCode = "404", description = "player not found")
             }
     )
-    public ResponseEntity<PlayerResponseDTO> updateById(@PathVariable String id,@RequestBody PlayerRequest playerRequest){
-        return ResponseEntity.ok().body(playerService.updateById(id,playerRequest));
+    public ResponseEntity<PlayerResponseDTO> updateById(@PathVariable String id, @RequestBody PlayerRequest playerRequest) {
+        return ResponseEntity.ok().body(playerService.updateById(id, playerRequest));
     }
 
     @DeleteMapping("/{id}")
@@ -100,7 +98,7 @@ public class PlayerController {
                     @ApiResponse(responseCode = "404", description = "player not found")
             }
     )
-    public ResponseEntity<Void> deletePlayer(@PathVariable String id){
+    public ResponseEntity<Void> deletePlayer(@PathVariable String id) {
         playerService.deletePlayer(id);
         return ResponseEntity.ok().build();
     }

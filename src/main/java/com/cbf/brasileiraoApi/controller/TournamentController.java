@@ -1,8 +1,8 @@
 package com.cbf.brasileiraoApi.controller;
 
 import com.cbf.brasileiraoApi.constants.OpenApiConstants;
-import com.cbf.brasileiraoApi.request.TournamentRequest;
 import com.cbf.brasileiraoApi.dto.TournamentResponseDTO;
+import com.cbf.brasileiraoApi.request.TournamentRequest;
 import com.cbf.brasileiraoApi.service.TournamentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,7 +30,7 @@ public class TournamentController {
                     @ApiResponse(responseCode = "201", description = "Register new Tournament")
             }
     )
-    public ResponseEntity<TournamentResponseDTO> newTournament(@RequestBody  TournamentRequest tournamentRequest){
+    public ResponseEntity<TournamentResponseDTO> newTournament(@RequestBody TournamentRequest tournamentRequest) {
         TournamentResponseDTO tournament = tournamentService.save(tournamentRequest);
         URI uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
@@ -47,7 +47,7 @@ public class TournamentController {
                     @ApiResponse(responseCode = "201", description = "find all tournaments")
             }
     )
-    public ResponseEntity<List<TournamentResponseDTO>> findAll(){
+    public ResponseEntity<List<TournamentResponseDTO>> findAll() {
         return ResponseEntity.ok().body(tournamentService.findAll());
     }
 
@@ -59,7 +59,32 @@ public class TournamentController {
                     @ApiResponse(responseCode = "404", description = "Tournaments not found")
             }
     )
-    public ResponseEntity<TournamentResponseDTO> findById(@PathVariable String id){
+    public ResponseEntity<TournamentResponseDTO> findById(@PathVariable String id) {
         return ResponseEntity.ok().body(tournamentService.findById(id));
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update tournament by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Update tournament by id"),
+                    @ApiResponse(responseCode = "404", description = "Tournament not found")
+            }
+    )
+    public ResponseEntity<TournamentResponseDTO> update(@PathVariable String id, @RequestBody TournamentRequest tournamentRequest) {
+        return ResponseEntity.ok().body(tournamentService.update(id, tournamentRequest));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "delete tournament by id")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Delete tournament by id"),
+                    @ApiResponse(responseCode = "404", description = "Tournament not found")
+            }
+    )
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        tournamentService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

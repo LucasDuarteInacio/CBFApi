@@ -16,4 +16,5 @@ public class Team {
     private String id;
     private String name;
     private String address;
+    private Boolean deleted;
 }

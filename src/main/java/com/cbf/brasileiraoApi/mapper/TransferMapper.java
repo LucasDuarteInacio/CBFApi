@@ -13,8 +13,10 @@ import java.util.List;
 public interface TransferMapper {
 
 
+    Transfer toDomain(TransferResponseDTO transferResponseDTO);
 
-    @IterableMapping(qualifiedByName="mapWithoutTeam")
+
+    @IterableMapping(qualifiedByName = "mapWithoutTeam")
     List<TransferResponseDTO> toReponseDTO(List<Transfer> transfer);
 
     @Named("mapWithoutTeam")

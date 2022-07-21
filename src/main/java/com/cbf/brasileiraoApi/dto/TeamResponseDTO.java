@@ -1,7 +1,6 @@
 package com.cbf.brasileiraoApi.dto;
 
 
-import com.cbf.brasileiraoApi.entity.Player;
 import lombok.*;
 
 import java.util.List;
@@ -16,4 +15,5 @@ public class TeamResponseDTO {
     private String name;
     private String address;
     private List<PlayerResponseDTO> players;
+    private Boolean deleted;
 }

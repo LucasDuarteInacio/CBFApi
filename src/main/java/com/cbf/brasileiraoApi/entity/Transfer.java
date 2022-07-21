@@ -21,4 +21,5 @@ public class Transfer {
     private Player player;
     private LocalDate date;
     private BigDecimal tranferValue;
+    private Boolean deleted;
 }
