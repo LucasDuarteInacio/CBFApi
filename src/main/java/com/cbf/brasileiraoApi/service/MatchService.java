@@ -8,6 +8,7 @@ import com.cbf.brasileiraoApi.exception.NotFoundException;
 import com.cbf.brasileiraoApi.mapper.MatchMapper;
 import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.mapper.TournamentMapper;
+import com.cbf.brasileiraoApi.producer.TopicEventProducer;
 import com.cbf.brasileiraoApi.repository.MatchRepository;
 import com.cbf.brasileiraoApi.request.EventRequest;
 import com.cbf.brasileiraoApi.request.MatchRequest;
@@ -27,6 +28,8 @@ public class MatchService {
     private final PlayerService playerService;
     private final PlayerMapper playerMapper;
     private final TournamentService tournamentService;
+    private final TopicEventProducer topicEventProducer;
+
 
     public Match newMatch(MatchRequest matchRequest) {
         Match match = matchMapper.toDomain(
@@ -62,6 +65,7 @@ public class MatchService {
         Event event = getTypeEvent(eventRequest, typeEvent);
         match.getEvents().add(event);
         save(match);
+        topicEventProducer.send(match.getId(),event);
         return event;
     }
 
