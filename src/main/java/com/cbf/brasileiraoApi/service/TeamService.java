@@ -24,7 +24,7 @@ public class TeamService {
     private final PlayerService playerService;
 
     public List<Team> findByIds(List<String> teamsId) {
-        return teamRepository.findAllByIdAndDeletedFalse(teamsId);
+        return teamRepository.findAllByIdInAndDeletedFalse(teamsId);
     }
 
     public Team save(TeamRequest teamRequest) {

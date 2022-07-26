@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TeamRepository extends MongoRepository<Team, String> {
-    List<Team> findAllByIdAndDeletedFalse(List<String> listId);
+    List<Team> findAllByIdInAndDeletedFalse(List<String> listId);
 
     List<Team> findAllByDeletedFalse();
 
