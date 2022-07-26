@@ -7,10 +7,12 @@ import com.cbf.brasileiraoApi.mapper.TeamMapper;
 import com.cbf.brasileiraoApi.repository.TeamRepository;
 import com.cbf.brasileiraoApi.request.TeamRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.cbf.brasileiraoApi.config.RedisConfig.CACHE_NAME;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -31,6 +33,9 @@ public class TeamService {
         return teamRepository.save(team);
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public List<TeamResponseDTO> findAll() {
         List<Team> teams = teamRepository.findAllByDeletedFalse();
         List<TeamResponseDTO> teamResponseDTOList = teamMapper.toResponseDTO(teams);
@@ -40,6 +45,9 @@ public class TeamService {
         return teamResponseDTOList;
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public Team findById(String id) {
         return teamRepository.findById(id).orElseThrow(NotFoundException::teamNotFound);
     }

@@ -3,6 +3,7 @@ package com.cbf.brasileiraoApi.entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tournament {
+public class Tournament implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String id;

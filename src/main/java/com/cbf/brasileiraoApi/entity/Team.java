@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
+
 
 @Getter
 @Setter
@@ -12,8 +14,10 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Team {
+public class Team  implements Serializable {
 
+
+    private static final long serialVersionUID = -1343258859675853580L;
     @Id
     private String id;
     private String name;

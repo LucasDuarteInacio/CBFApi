@@ -5,6 +5,7 @@ import com.cbf.brasileiraoApi.entity.Team;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -14,8 +15,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TransferResponseDTO {
+public class TransferResponseDTO  implements Serializable {
 
+    private static final long serialVersionUID = 1347789388048590349L;
     private String id;
     private Team originalTeam;
     private Team destinationTeam;

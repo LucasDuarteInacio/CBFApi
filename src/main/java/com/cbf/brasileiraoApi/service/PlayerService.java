@@ -9,11 +9,13 @@ import com.cbf.brasileiraoApi.mapper.PlayerMapper;
 import com.cbf.brasileiraoApi.repository.PlayerRepository;
 import com.cbf.brasileiraoApi.request.PlayerRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.cbf.brasileiraoApi.config.RedisConfig.CACHE_NAME;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -31,14 +33,23 @@ public class PlayerService {
         return playerMapper.toReponseDTO(playerRepository.save(player));
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public List<PlayerResponseDTO> findAll() {
         return playerMapper.toReponseDTO(playerRepository.findAllByDeletedFalse());
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public PlayerResponseDTO findById(String id) {
         return playerMapper.toReponseDTO(playerRepository.findById(id).orElseThrow(NotFoundException::playerNotFound));
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public List<PlayerResponseDTO> findAllByTeamId(String idTeam) {
         return playerMapper.toReponseDTOWithoutTeam(playerRepository.findAllByTeamId(idTeam));
     }

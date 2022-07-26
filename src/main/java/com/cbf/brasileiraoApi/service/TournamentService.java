@@ -9,19 +9,24 @@ import com.cbf.brasileiraoApi.mapper.TournamentMapper;
 import com.cbf.brasileiraoApi.repository.TournamentRepository;
 import com.cbf.brasileiraoApi.request.TournamentRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+import static com.cbf.brasileiraoApi.config.RedisConfig.CACHE_NAME;
 import static java.util.Objects.nonNull;
 
 @Service
 @RequiredArgsConstructor
 public class TournamentService {
 
+
     private final TournamentRepository tournamentRepository;
     private final TournamentMapper tournamentMapper;
     private final TeamService teamService;
+
 
     public TournamentResponseDTO save(TournamentRequest tournamentRequest) {
         valitadorTournamentType(tournamentRequest.getTournamentType());
@@ -38,10 +43,19 @@ public class TournamentService {
         }
     }
 
+
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public List<TournamentResponseDTO> findAll() {
         return tournamentMapper.toResponseDTO(tournamentRepository.findAllByDeletedFalse());
     }
 
+
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null",
+            key = "{#id}")
     public TournamentResponseDTO findById(String id) {
         return tournamentMapper.toResponseDTO(
                 tournamentRepository.findById(id).orElseThrow(NotFoundException::tournamentNotFound)

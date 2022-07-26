@@ -11,10 +11,13 @@ import com.cbf.brasileiraoApi.mapper.TransferMapper;
 import com.cbf.brasileiraoApi.repository.TransferRepository;
 import com.cbf.brasileiraoApi.request.TransferRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+
+import static com.cbf.brasileiraoApi.config.RedisConfig.CACHE_NAME;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +51,16 @@ public class TransferService {
         return transferMapper.toReponseDTOWithoutTeam(transferRepository.save(transfer));
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public List<TransferResponseDTO> findAll() {
         return transferMapper.toReponseDTO(transferRepository.findAllByDeletedFalse());
     }
 
+    @Cacheable(
+            cacheNames = CACHE_NAME,
+            unless = "#result == null")
     public TransferResponseDTO findById(String id) {
         return transferMapper.toReponseDTOWithoutTeam(transferRepository.findById(id).orElseThrow(NotFoundException::transferNotFound));
     }

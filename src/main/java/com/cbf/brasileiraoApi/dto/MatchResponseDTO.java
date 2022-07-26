@@ -6,6 +6,7 @@ import com.cbf.brasileiraoApi.entity.Tournament;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MatchResponseDTO {
+public class MatchResponseDTO  implements Serializable {
+    private static final long serialVersionUID = 4213090157579577235L;
 
     private String id;
     private String description;
